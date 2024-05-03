@@ -26,7 +26,7 @@ export async function createOnRampTransaction(amount: number, provider: string) 
     })
 
     return {
-        status: "success",
+        status: "success Done",
         message: "OnRamp txns added successfully"
     }
 }
