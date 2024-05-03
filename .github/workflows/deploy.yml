@@ -10,7 +10,7 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-      - name: Check Out Repo
+      - name: Checkout Repo
         uses: actions/checkout@v2
 
       - name: Log in to Docker Hub
@@ -38,6 +38,12 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             sudo docker pull foxyfool/cicdtest1:latest
-            sudo docker stop web-app || true
-            sudo docker rm web-app || true
-            sudo docker run -d --name web-app -p 3005:3000 foxyfool/cicdtest1:latest
+
+            # Check if container exists
+            if [[ $(sudo docker ps -a -q --filter name=web-app) ]]; then
+              sudo docker stop web-app
+              sudo docker rm web-app
+            fi
+
+            # Start the container
+            sudo docker run -e DATABASE_URL="${{ secrets.DB_URL }}" -d --name web-app -p 3005:3000 foxyfool/cicdtest1:latest
