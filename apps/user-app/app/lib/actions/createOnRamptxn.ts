@@ -25,6 +25,6 @@ export async function createOnRampTransaction(amount: number, provider: string) 
     })
 
     return {
-        message: "On ramp transaction added"
+        message: "OnRamp txns added successfully"
     }
 }
