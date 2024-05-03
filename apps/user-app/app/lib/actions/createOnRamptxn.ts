@@ -3,6 +3,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 import prisma from "@repo/db/client";
+import { stat } from "fs";
 
 export async function createOnRampTransaction(amount: number, provider: string) {
     const session = await getServerSession(authOptions);
@@ -25,6 +26,7 @@ export async function createOnRampTransaction(amount: number, provider: string) 
     })
 
     return {
+        status: "success",
         message: "OnRamp txns added successfully"
     }
 }
